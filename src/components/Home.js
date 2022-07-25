@@ -1,12 +1,13 @@
 import '../styles/Home.css';
 import React from 'react'
+import logodark from '../assests/img/logo-dark.svg';
 
 function Home() {
   return (
     <div className="home">
   <div className="home__container">
     <img
-      src="../assests/img/logo-light.svg"
+      src={logodark}
       alt="Tyche logo"
       className="home__image"
     />

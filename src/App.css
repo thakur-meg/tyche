@@ -1,0 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Alata&display=swap');
+
+* {
+    overflow: hidden;
+    background-color: #1C2541;
+    font-family: 'Alata', sans-serif;
+}
