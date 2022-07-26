@@ -1,6 +1,8 @@
-import firebase from "firebase";
+import firebase from "firebase/compat/app"
+import "firebase/compat/auth"
+import "firebase/compat/firestore"
 
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+
 const firebaseConfig = {
     apiKey: "AIzaSyBDvpz4r7gmgJt1h97_WO1OhAQa72tqIBg",
     authDomain: "tyche-9c838.firebaseapp.com",
@@ -17,7 +19,6 @@ const db = app.firestore();
 
 const googleProvider = new firebase.auth.GoogleAuthProvider();
 
-  // Sign in and check or create account in firestore
 const signInWithGoogle = async () => {
     try {
       const response = await auth.signInWithPopup(googleProvider);
