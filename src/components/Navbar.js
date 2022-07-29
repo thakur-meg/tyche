@@ -5,14 +5,16 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, logout } from "../firebase";
 import "../styles/Navbar.css";
 import logodark from "../assests/img/logo-dark.svg";
-import { CreateCourse } from './CreateCourse';
-import { JoinCourse } from './JoinCourse';
-
+import CreateCourse from "./CreateCourse";
+import JoinCourse  from "./JoinCourse"
+import { useRecoilState } from "recoil";
+import { createDialogAtom, joinDialogAtom } from "../utilities/atoms";
 
 function Navbar() {
   const [user, loading, error] = useAuthState(auth);
   const [anchorEl, setAnchorEl] = useState(null);
-
+  const [createOpened, setCreateOpened] = useRecoilState(createDialogAtom);
+  const [joinOpened, setJoinOpened] = useRecoilState(joinDialogAtom);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -54,11 +56,21 @@ function Navbar() {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            <MenuItem>
-              Create Course
+            <MenuItem
+              onClick={() => {
+                setCreateOpened(true);
+                handleClose();
+              }}
+            >
+              Create Class
             </MenuItem>
-            <MenuItem>
-              Join Course
+            <MenuItem
+              onClick={() => {
+                setJoinOpened(true);
+                handleClose();
+              }}
+            >
+              Join Class
             </MenuItem>
           </Menu>
         </div>

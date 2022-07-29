@@ -12,14 +12,49 @@ import {
   import { useRecoilState } from "recoil";
   import { auth, db } from "../firebase";
   import { createDialogAtom } from "../utilities/atoms";
-  function CreateClass() {
+
+  function CreateCourse() {
     const [user, loading, error] = useAuthState(auth);
     const [open, setOpen] = useRecoilState(createDialogAtom);
     const [className, setClassName] = useState("");
     const handleClose = () => {
       setOpen(false);
     };
-  
+    const CreateCourse = async () => {
+        try {
+          const newClass = await db.collection("classes").add({
+            creatorUid: user.uid,
+            name: className,
+            creatorName: user.displayName,
+            creatorPhoto: user.photoURL,
+            posts: [],
+          });
+    
+          // add to current user's class list
+          const userRef = await db
+            .collection("users")
+            .where("uid", "==", user.uid)
+            .get();
+          const docId = userRef.docs[0].id;
+          const userData = userRef.docs[0].data();
+          let userClasses = userData.enrolledClassrooms;
+          userClasses.push({
+            id: newClass.id,
+            name: className,
+            creatorName: user.displayName,
+            creatorPhoto: user.photoURL,
+          });
+          const docRef = await db.collection("users").doc(docId);
+          await docRef.update({
+            enrolledClassrooms: userClasses,
+          });
+          handleClose();
+          alert("Classroom created successfully!");
+        } catch (err) {
+          alert(`Cannot create class - ${err.message}`);
+        }
+      };
+
     return (
       <div>
         <Dialog
@@ -27,7 +62,7 @@ import {
           onClose={handleClose}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">Create class</DialogTitle>
+          <DialogTitle id="form-dialog-title">Create course</DialogTitle>
           <DialogContent>
             <DialogContentText>
               Enter the name of class and we will create a classroom for you!
@@ -43,10 +78,10 @@ import {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose} color="primary">
+            <Button onClick={handleClose} color="dark">
               Cancel
             </Button>
-            <Button onClick={handleClose} color="primary">
+            <Button onClick={CreateCourse} color="dark">
               Create
             </Button>
           </DialogActions>
@@ -54,5 +89,5 @@ import {
       </div>
     );
   }
-  export default CreateClass;
+  export default CreateCourse;
   
