@@ -7,7 +7,7 @@
     padding: 0 20px;
     align-items: center;
     background-color: #0B132B;
-    color: #fff;
+
   }
   .navbar__left {
     display: flex;
@@ -16,6 +16,7 @@
   .navbar__left img {
     margin-right: 20px;
     margin-left: 20px;
+
   }
   .navbar__left span {
     font-size: 20px;
@@ -25,6 +26,9 @@
     align-items: center;
   }
   .navbar__logo {
-    height: 30px;
+    height: 90px;
     width: auto;
+  }
+  Menu {
+    background-color: #0B132B;
   }

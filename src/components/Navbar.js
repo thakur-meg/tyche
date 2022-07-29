@@ -1,10 +1,13 @@
 import { Avatar, IconButton, MenuItem, Menu } from "@material-ui/core";
-import { Add, Apps, Menu as MenuIcon } from "@material-ui/icons";
+import { Add, Menu as MenuIcon } from "@material-ui/icons";
 import React, { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, logout } from "../firebase";
 import "../styles/Navbar.css";
 import logodark from "../assests/img/logo-dark.svg";
+import { CreateCourse } from './CreateCourse';
+import { JoinCourse } from './JoinCourse';
+
 
 function Navbar() {
   const [user, loading, error] = useAuthState(auth);
@@ -19,18 +22,19 @@ function Navbar() {
 
   return (
     <>
-      
+      <CreateCourse />
+      <JoinCourse />
       <nav className="navbar">
         <div className="navbar__left">
           <IconButton>
-            <MenuIcon />
+            <MenuIcon style={{ color: 'white' }}/>
           </IconButton>
           <img
             src={logodark}
             alt="Tyche Logo"
             className="navbar__logo"
           />{" "}
-          <span>Classroom</span>
+
         </div>
         <div className="navbar__right">
           <IconButton
@@ -38,10 +42,7 @@ function Navbar() {
             aria-haspopup="true"
             onClick={handleClick}
           >
-            <Add />
-          </IconButton>
-          <IconButton>
-            <Apps />
+            <Add style={{ color: 'white' }}/>
           </IconButton>
           <IconButton onClick={logout}>
             <Avatar src={user?.photoURL} />
@@ -54,10 +55,10 @@ function Navbar() {
             onClose={handleClose}
           >
             <MenuItem>
-              Create Class
+              Create Course
             </MenuItem>
             <MenuItem>
-              Join Class
+              Join Course
             </MenuItem>
           </Menu>
         </div>
