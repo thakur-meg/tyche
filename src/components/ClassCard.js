@@ -3,6 +3,7 @@ import { AssignmentIndOutlined, FolderOpenOutlined } from "@material-ui/icons";
 import React from "react";
 import { useHistory } from "react-router-dom";
 import "../styles/ClassCard.css";
+
 function ClassCard({ name, creatorName, creatorPhoto, id, style }) {
   const history = useHistory();
   const goToClass = () => {
