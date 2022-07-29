@@ -12,14 +12,17 @@ import {
   import { useRecoilState } from "recoil";
   import { auth, db } from "../firebase";
   import { joinDialogAtom } from "../utilities/atoms";
+  
   function JoinCourse() {
     const [open, setOpen] = useRecoilState(joinDialogAtom);
     const [user, loading, error] = useAuthState(auth);
     const [classId, setClassId] = useState("");
+  
     const handleClose = () => {
       setOpen(false);
     };
-    const joinCourse = async () => {
+  
+    const JoinCourse = async () => {
       try {
         // check if class exists
         const classRef = await db.collection("classes").doc(classId).get();
@@ -50,8 +53,9 @@ import {
         alert(err.message);
       }
     };
+  
     return (
-      <div className="joinCourse">
+      <div className="JoinCourse">
         <Dialog
           open={open}
           onClose={handleClose}
@@ -76,7 +80,7 @@ import {
             <Button onClick={handleClose} color="primary">
               Cancel
             </Button>
-            <Button onClick={joinCourse} color="primary">
+            <Button onClick={JoinCourse} color="primary">
               Join
             </Button>
           </DialogActions>
@@ -84,4 +88,5 @@ import {
       </div>
     );
   }
+  
   export default JoinCourse;

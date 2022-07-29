@@ -6,9 +6,11 @@ import "../styles/ClassCard.css";
 
 function ClassCard({ name, creatorName, creatorPhoto, id, style }) {
   const history = useHistory();
+
   const goToClass = () => {
     history.push(`/class/${id}`);
   };
+
   return (
     <div className="classCard" style={style} onClick={goToClass}>
       <div className="classCard__upper">
@@ -28,4 +30,5 @@ function ClassCard({ name, creatorName, creatorPhoto, id, style }) {
     </div>
   );
 }
+
 export default ClassCard;

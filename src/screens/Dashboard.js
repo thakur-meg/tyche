@@ -5,10 +5,12 @@ import { auth, db } from "../firebase";
 import { useHistory } from "react-router-dom";
 import { useState } from "react";
 import ClassCard from "../components/ClassCard";
+
 function Dashboard() {
   const [user, loading, error] = useAuthState(auth);
   const [classes, setClasses] = useState([]);
   const history = useHistory();
+
   const fetchClasses = async () => {
     try {
       await db
@@ -17,21 +19,25 @@ function Dashboard() {
         .onSnapshot((snapshot) => {
           setClasses(snapshot?.docs[0]?.data()?.enrolledClassrooms);
         });
+      
     } catch (error) {
       console.error(error.message);
     }
   };
+
   useEffect(() => {
     if (loading) return;
     if (!user) history.replace("/");
   }, [user, loading]);
+
   useEffect(() => {
     if (loading) return;
     fetchClasses();
   }, [user, loading]);
+
   return (
     <div className="dashboard">
-      {classes?.length === 0 ? (
+      {classes.length === 0 ? (
         <div className="dashboard__404">
           No classes found! Join or create one!
         </div>
@@ -51,4 +57,5 @@ function Dashboard() {
     </div>
   );
 }
+
 export default Dashboard;
